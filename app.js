@@ -25,9 +25,7 @@ async function loadSwaggerDoc() {
             swaggerOptions: {
                 url: "/swagger/swagger.json",
             },
-            customCssUrl: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui.css",
-            customJs: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui-bundle.js",
-            customJsStandalonePreset: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui-standalone-preset.js"
+            customCssUrl: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui.css"
         };
 
         app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
