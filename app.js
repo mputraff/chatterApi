@@ -20,10 +20,10 @@ async function loadSwaggerDoc() {
         const swaggerPath = path.join(process.cwd(), 'swagger', 'swagger.json');
         const swaggerDocument = JSON.parse(await fs.readFile(swaggerPath, 'utf-8'));
 
-        // Menggunakan CDN Swagger UI agar tidak perlu mengakses file lokal
         const options = {
             swaggerOptions: {
-                url: "/swagger/swagger.json",
+                // Gunakan URL absolut untuk dokumen Swagger
+                url: `https://chatter-api.vercel.app/swagger/swagger.json`,
             },
             customCssUrl: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui.css"
         };
