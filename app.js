@@ -11,10 +11,10 @@ const PORT = process.env.PORT || 3000;
 // Middleware untuk parsing JSON
 app.use(express.json());
 
-
 // Routes
 app.use("/api/auth", authRoutes);
 
+// Koneksi ke MongoDB
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
@@ -28,15 +28,18 @@ const connectDB = async () => {
   }
 };
 
+// Middleware untuk menangani error
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong!' });
+});
 
 // Memulai server
 const startServer = async () => {
   await connectDB();
 
-  const port = process.env.PORT; 
-  app.listen(port, "0.0.0.0", () => {
-    // Bind ke 0.0.0.0
-    console.log(`Server is running on port ${port}`);
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server is running on port ${PORT}`);
   });
 };
 
