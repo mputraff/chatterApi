@@ -20,8 +20,17 @@ async function loadSwaggerDoc() {
         const swaggerPath = path.join(process.cwd(), 'swagger', 'swagger.json');
         const swaggerDocument = JSON.parse(await fs.readFile(swaggerPath, 'utf-8'));
 
-        // Konfigurasi Swagger UI untuk /api-docs
-        app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+        // Menggunakan CDN Swagger UI agar tidak perlu mengakses file lokal
+        const options = {
+            swaggerOptions: {
+                url: "/swagger/swagger.json",
+            },
+            customCssUrl: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui.css",
+            customJs: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui-bundle.js",
+            customJsStandalonePreset: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui-standalone-preset.js"
+        };
+
+        app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
     } catch (error) {
         console.error('Error loading Swagger document:', error);
     }
