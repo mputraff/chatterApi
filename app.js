@@ -18,11 +18,12 @@ app.use(express.json());
 async function loadSwaggerDoc() {
     try {
         const swaggerPath = path.join(process.cwd(), 'swagger', 'swagger.json');
+        console.log(`Loading Swagger document from: ${swaggerPath}`);
         const swaggerDocument = JSON.parse(await fs.readFile(swaggerPath, 'utf-8'));
+        console.log('Swagger document loaded successfully.');
 
         const options = {
             swaggerOptions: {
-                // Gunakan URL absolut untuk dokumen Swagger
                 url: `https://chatter-api.vercel.app/swagger/swagger.json`,
             },
             customCssUrl: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui.css"
@@ -41,7 +42,7 @@ app.use('/api', authRoutes);
 loadSwaggerDoc();
 
 // Koneksi ke MongoDB
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
         console.log("Connected to MongoDB");
     })
