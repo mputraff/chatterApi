@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
+import cors from "cors";
 
 dotenv.config();
 
@@ -24,6 +25,14 @@ const connectDB = async () => {
     process.exit(1);
   }
 };
+
+app.use(cors({
+  origin : [
+    'http://localhost:5173/'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}))
 
 // Middleware untuk menangani error
 app.use((err, req, res, next) => {
