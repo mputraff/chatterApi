@@ -31,6 +31,7 @@ async function loadSwaggerDoc() {
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
         console.log("Connected to MongoDB");
+        loadSwaggerDoc();
     })
     .catch((error) => {
         console.log("Error connecting to MongoDB:", error);
