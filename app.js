@@ -16,25 +16,23 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);
 
-const connectToMongoDB = async () => {
+const connectDB = async () => {
   try {
-      const mongoURI = process.env.MONGODB_URI;
-      if (!mongoURI) {
-          throw new Error('MONGODB_URI is not defined');
-      }
-      await mongoose.connect(mongoURI, {
-          serverSelectionTimeoutMS: 5000
-      });
-      console.log('Connected to MongoDB');
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('MongoDB connected');
   } catch (error) {
-      console.error('MongoDB connection error:', error);
-      process.exit(1);  // Exit jika tidak bisa connect ke MongoDB
+    console.error('MongoDB connection failed:', error.message);
+    process.exit(1);
   }
 };
 
+
 // Memulai server
 const startServer = async () => {
-  await connectToMongoDB();
+  await connectDB();
 
   const port = process.env.PORT; 
   app.listen(port, "0.0.0.0", () => {
